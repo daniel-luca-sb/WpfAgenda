@@ -17,6 +17,8 @@ namespace WpfAgenda1
         private const string XML_NAME = "MyFriends.xml";
 
         private readonly DataLayer dataLayer;
+        private readonly IOService openFileService;
+
         private string filter;
         private Friend selectedFriend;
 
@@ -30,11 +32,14 @@ namespace WpfAgenda1
         public ICommand AddCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand BrowseCommand { get; set; }
 
         public MainViewModel()
         {
             dataLayer = new DataLayer();
             dataLayer.LoadFriends(XML_NAME);
+
+            openFileService = new OpenFileDialogService();
 
             Friends = new ObservableCollection<Friend>(dataLayer.AllFriends);
             FilteredFriends = CollectionViewSource.GetDefaultView(Friends);
@@ -51,6 +56,20 @@ namespace WpfAgenda1
             AddCommand = new DelegateCommand(AddFriend);
             DeleteCommand = new DelegateCommand(DeleteFriend, o => SelectedFriend != null);
             CloseCommand = new DelegateCommand(CloseApp);
+            BrowseCommand = new DelegateCommand(BrowseFiles);
+        }
+
+        private void BrowseFiles(object obj)
+        {
+            var file = openFileService.OpenFileDialog();
+            if (!string.IsNullOrEmpty(file))
+            {
+                if (SelectedFriend != null)
+                {
+                    SelectedFriend.ImagePath = file;
+                    FilteredFriends.Refresh();                    
+                }
+            }
         }
 
         private void CloseApp(object obj)

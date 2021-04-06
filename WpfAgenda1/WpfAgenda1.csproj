@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="DataLayer.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="IOService.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -73,6 +74,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Friend.cs" />
+    <Compile Include="OpenFileDialogService.cs" />
+    <Compile Include="PathToImageConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="NoPic.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

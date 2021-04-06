@@ -10,6 +10,8 @@
         <Style TargetType="TextBlock" x:Key="templateStyle">
             <Setter Property="Margin" Value="0,0,5,0"/>
         </Style>
+        <ImageSource x:Key="noPic">NoPic.bmp</ImageSource>
+        <local:PathToImageConverter x:Key="ImageConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -27,11 +29,18 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="60" Height="60" Grid.Column="0" Grid.RowSpan="2" 
+                               Source="{Binding ImagePath, Converter={StaticResource ImageConverter},
+                                    FallbackValue={StaticResource noPic}, TargetNullValue={StaticResource noPic}}"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                             <TextBlock Text="{Binding Name}" Style="{StaticResource templateStyle}" FontSize="20" FontWeight="Bold"/>
                             <TextBlock Text="{Binding Lastname}" Style="{StaticResource templateStyle}" FontSize="20" FontWeight="Bold"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
                             <TextBlock Text="{Binding Adress}" Style="{StaticResource templateStyle}"/>
                             <TextBlock Text="{Binding City}" Style="{StaticResource templateStyle}"/>
                             <TextBlock Text="{Binding Phone}" Style="{StaticResource templateStyle}"/>
@@ -71,7 +80,10 @@
             <Label Content="Data nasterii" Grid.Row="6"/>
             <TextBox Text="{Binding SelectedFriend.Birthday, StringFormat=dd.MM.yyyy}" Grid.Column="1" Grid.Row="6" Margin="2"/>
             <StackPanel Orientation="Vertical" Grid.Column="2" Grid.RowSpan="7">
-                
+                <Image Width="60" Height="60" Source="{Binding SelectedFriend.ImagePath, Converter={StaticResource ImageConverter},
+                    FallbackValue={StaticResource noPic}, TargetNullValue={StaticResource noPic}}" />
+                <TextBox x:Name="imagePath" Margin="5" Text="{Binding SelectedFriend.ImagePath}"/>
+                <Button x:Name="btnBrowse" Content="Browse" Width="70" Command="{Binding BrowseCommand}"/>
             </StackPanel>
         </Grid>
         

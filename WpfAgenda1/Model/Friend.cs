@@ -28,6 +28,6 @@ namespace WpfAgenda1.Model
         public string Country { get; set; }
         public DateTime Birthday { get; set; }
         public string Phone { get; set; }
-
+        public string ImagePath { get; set; }
     }
 }
