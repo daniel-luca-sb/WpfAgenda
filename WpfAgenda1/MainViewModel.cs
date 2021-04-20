@@ -21,6 +21,7 @@ namespace WpfAgenda1
 
         private string filter;
         private Friend selectedFriend;
+        private string[] countries = { "Romania", "Germania", "SUA", "Moldova", "Bulgaria", "China", "Franta", "Italia", "Spania", "Regatul Unit", "Tarile de jos" };
 
         public ObservableCollection<Friend> Friends { get; set; }
 
@@ -29,6 +30,7 @@ namespace WpfAgenda1
         public Friend SelectedFriend { get => selectedFriend; set { selectedFriend = value; ((DelegateCommand)DeleteCommand).RaiseCanExecuteChanged(); } }
         public string Filter { get => filter; set { filter = value; FilteredFriends.Refresh(); } }
 
+        public string[] Countries { get => countries.OrderBy(s => s).ToArray(); set => countries = value; }
         public ICommand AddCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -67,7 +69,7 @@ namespace WpfAgenda1
                 if (SelectedFriend != null)
                 {
                     SelectedFriend.ImagePath = file;
-                    FilteredFriends.Refresh();                    
+                    FilteredFriends.Refresh();
                 }
             }
         }

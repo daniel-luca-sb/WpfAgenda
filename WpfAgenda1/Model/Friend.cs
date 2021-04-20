@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,9 @@ namespace WpfAgenda1.Model
     }
     
     [Serializable]
-    public class Friend
+    public class Friend : IDataErrorInfo
     {
+
         /// <summary>
         /// Prenumele
         /// </summary>
@@ -29,5 +31,19 @@ namespace WpfAgenda1.Model
         public DateTime Birthday { get; set; }
         public string Phone { get; set; }
         public string ImagePath { get; set; }
+
+        public string Error => null;
+        public string this[string columnName]
+        {
+            get
+            {
+                if(columnName == "Name")
+                {
+                    if (string.IsNullOrEmpty(Name))
+                        return "Numele nu trebuie sa lipseasca";
+                }
+                return null;
+            }
+        }
     }
 }

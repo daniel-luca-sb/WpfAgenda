@@ -76,6 +76,7 @@
     <Compile Include="Model\Friend.cs" />
     <Compile Include="OpenFileDialogService.cs" />
     <Compile Include="PathToImageConverter.cs" />
+    <Compile Include="PhoneValidationRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

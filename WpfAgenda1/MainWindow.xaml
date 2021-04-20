@@ -10,6 +10,16 @@
         <Style TargetType="TextBlock" x:Key="templateStyle">
             <Setter Property="Margin" Value="0,0,5,0"/>
         </Style>
+        
+        <Style TargetType="{x:Type FrameworkElement}" x:Key="ValidatingControl">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding Path=(Validation.Errors)[0].ErrorContent, 
+                        RelativeSource={x:Static RelativeSource.Self}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
         <ImageSource x:Key="noPic">NoPic.bmp</ImageSource>
         <local:PathToImageConverter x:Key="ImageConverter"/>
     </Window.Resources>
@@ -66,7 +76,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Numele" Grid.Row="0" Grid.Column="0" />
-            <TextBox Text="{Binding SelectedFriend.Name}" Grid.Column="1" Grid.Row="0" Margin="2"/>
+            <TextBox Text="{Binding SelectedFriend.Name, ValidatesOnDataErrors=True}" Style="{StaticResource ValidatingControl}"
+                     Grid.Column="1" Grid.Row="0" Margin="2"/>
             <Label Content="Prenume" Grid.Row="1" />
             <TextBox Text="{Binding SelectedFriend.Lastname}" Grid.Column="1" Grid.Row="1" Margin="2"/>
             <Label Content="Adresa" Grid.Row="2"/>
@@ -74,11 +85,20 @@
             <Label Content="Oras" Grid.Row="3" />
             <TextBox Text="{Binding SelectedFriend.City}" Grid.Column="1" Grid.Row="3" Margin="2"/>
             <Label Content="Tara" Grid.Row="4" />
-            <TextBox Text="{Binding SelectedFriend.Country}" Grid.Column="1" Grid.Row="4" Margin="2"/>
-            <Label Content="Telefon" Grid.Row="5"/>               
-            <TextBox Text="{Binding SelectedFriend.Phone}" Grid.Column="1" Grid.Row="5" Margin="2"/>
+            <ComboBox Grid.Column="1" Grid.Row="4" Margin="2" ItemsSource="{Binding Countries}" 
+                      SelectedValue="{Binding SelectedFriend.Country}"/>
+            <Label Content="Telefon" Grid.Row="5"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Margin="2" Style="{StaticResource ValidatingControl}">
+                <TextBox.Text>
+                    <Binding Path="SelectedFriend.Phone">
+                        <Binding.ValidationRules>
+                            <local:PhoneValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Content="Data nasterii" Grid.Row="6"/>
-            <TextBox Text="{Binding SelectedFriend.Birthday, StringFormat=dd.MM.yyyy}" Grid.Column="1" Grid.Row="6" Margin="2"/>
+            <DatePicker Grid.Row="6" Grid.Column="1" Margin="2" SelectedDate="{Binding SelectedFriend.Birthday}" SelectedDateFormat="Short"/>
             <StackPanel Orientation="Vertical" Grid.Column="2" Grid.RowSpan="7">
                 <Image Width="60" Height="60" Source="{Binding SelectedFriend.ImagePath, Converter={StaticResource ImageConverter},
                     FallbackValue={StaticResource noPic}, TargetNullValue={StaticResource noPic}}" />
