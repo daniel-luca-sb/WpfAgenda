@@ -23,7 +23,7 @@ namespace WpfAgenda1
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(new DataLayer());
         }
     }
 }

@@ -9,7 +9,7 @@ using WpfAgenda1.Model;
 
 namespace WpfAgenda1
 {
-    public class DataLayer
+    public class DataLayer : IDataLayer
     {
         public List<Friend> AllFriends { get; set; }
 
@@ -29,7 +29,7 @@ namespace WpfAgenda1
         public void LoadFriends(string xmlFile)
         {
             var serializer = new XmlSerializer(typeof(Friends));
-            using(var stream = new StreamReader(xmlFile))
+            using (var stream = new StreamReader(xmlFile))
             {
                 var obj = serializer.Deserialize(stream);
                 var friends = (Friends)obj;

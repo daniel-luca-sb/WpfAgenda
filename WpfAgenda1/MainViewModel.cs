@@ -16,7 +16,7 @@ namespace WpfAgenda1
     {
         private const string XML_NAME = "MyFriends.xml";
 
-        private readonly DataLayer dataLayer;
+        private readonly IDataLayer dataLayer;
         private readonly IOService openFileService;
 
         private string filter;
@@ -31,14 +31,16 @@ namespace WpfAgenda1
         public string Filter { get => filter; set { filter = value; FilteredFriends.Refresh(); } }
 
         public string[] Countries { get => countries.OrderBy(s => s).ToArray(); set => countries = value; }
+        
         public ICommand AddCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand BrowseCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(IDataLayer dataLayer)
         {
-            dataLayer = new DataLayer();
+            this.dataLayer = dataLayer;
             dataLayer.LoadFriends(XML_NAME);
 
             openFileService = new OpenFileDialogService();
@@ -59,6 +61,14 @@ namespace WpfAgenda1
             DeleteCommand = new DelegateCommand(DeleteFriend, o => SelectedFriend != null);
             CloseCommand = new DelegateCommand(CloseApp);
             BrowseCommand = new DelegateCommand(BrowseFiles);
+            SaveCommand = new DelegateCommand(SaveData);
+        }
+
+        private void SaveData(object obj)
+        {
+            dataLayer.AllFriends = Friends.ToList();
+
+            dataLayer.SaveFriends(XML_NAME);
         }
 
         private void BrowseFiles(object obj)
@@ -76,8 +86,7 @@ namespace WpfAgenda1
 
         private void CloseApp(object obj)
         {
-            dataLayer.SaveFriends(XML_NAME);
-            Application.Current.Shutdown();
+            Application.Current.MainWindow.Close();
         }
 
         private void DeleteFriend(object obj)
