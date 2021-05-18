@@ -1,0 +1,65 @@
+﻿<Window x:Class="StudentiApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentiApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!--<CollectionViewSource x:Key="studentiViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Studenti}, CreateList=True}"/>
+        <CollectionViewSource x:Key="studentiNoteViewSource" Source="{Binding Note, Source={StaticResource studentiViewSource}}"/>-->
+        <CollectionViewSource x:Key="materiiViewSource" Source="{Binding MateriiList}"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Row="1" Grid.Column="0" Margin="2"  x:Name="studentiDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding StudentList}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nrMatricolColumn" Binding="{Binding NrMatricol}" Header="Nr Matricol" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="numeColumn" Binding="{Binding Nume}" Header="Nume" Width="SizeToCells"/>
+                <DataGridTemplateColumn x:Name="dataNasteriiColumn" Header="Data Nasterii" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding DataNasterii, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                 <DataGridTextColumn x:Name="adresaColumn" Binding="{Binding Adresa}" Header="Adresa" Width="SizeToCells"/>
+               <DataGridTextColumn x:Name="orasColumn" Binding="{Binding Oras}" Header="Oras" Width="SizeToCells"/>
+                <DataGridTextColumn x:Name="telefonColumn" Binding="{Binding Telefon}" Header="Telefon" Width="SizeToCells"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+            <Label Content="Notele pentru: "/>
+            <TextBlock Text="{Binding SelectedItem.Nume, ElementName=studentiDataGrid}" FontWeight="Bold" VerticalAlignment="Center"/>
+        </StackPanel>
+        <DataGrid x:Name="noteDataGrid" CanUserDeleteRows="False" Grid.Row="1" Grid.Column="1" Margin="2" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding SelectedItem.Note, ElementName=studentiDataGrid}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn x:Name="dataColumn" Header="Data" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Data, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridComboBoxColumn x:Name="materieCol" Header="Materia" Width="SizeToCells" ItemsSource="{Binding Source={StaticResource materiiViewSource}}"
+                                        DisplayMemberPath="Denumire" SelectedValueBinding="{Binding IDMaterie}" SelectedValuePath="ID"/>
+                <!--<DataGridTextColumn x:Name="iDMaterieColumn" Binding="{Binding IDMaterie}" Header="IDMaterie" Width="SizeToHeader"/>-->
+                <!--<DataGridTextColumn x:Name="iDStudentColumn" Binding="{Binding IDStudent}" Header="IDStudent" Width="SizeToHeader"/>-->
+                <DataGridTextColumn x:Name="notaColumn" Binding="{Binding Nota}" Header="Nota" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="tipExamenColumn" Binding="{Binding TipExamen}" Header="Tip" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
+            <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="10"  VerticalAlignment="Top" Width="75"/>
+        </StackPanel>
+    </Grid>
+</Window>
