@@ -58,8 +58,9 @@
                 <DataGridTextColumn x:Name="tipExamenColumn" Binding="{Binding TipExamen}" Header="Tip" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
-            <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="10"  VerticalAlignment="Top" Width="75"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+            <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="5"  VerticalAlignment="Top" Width="75"/>
+            <Button Content="Materii" Command="{Binding ShowMateriiCommand}" HorizontalAlignment="Left" Margin="5"  VerticalAlignment="Top" Width="75"/>
         </StackPanel>
     </Grid>
 </Window>

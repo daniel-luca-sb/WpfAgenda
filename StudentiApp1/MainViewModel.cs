@@ -17,6 +17,7 @@ namespace StudentiApp1
         public ObservableCollection<Materii> MateriiList { get; set; }
 
         public ICommand SaveCommand { get; set; }
+        public ICommand ShowMateriiCommand { get; set; }
 
         public MainViewModel()
         {
@@ -29,6 +30,12 @@ namespace StudentiApp1
             MateriiList = context.Materii.Local;
 
             SaveCommand = new DelegateCommand(OnSaveCommand);
+            ShowMateriiCommand = new DelegateCommand(OnShowMaterii);
+        }
+
+        private void OnShowMaterii(object obj)
+        {
+            ViewManager.ShowView("MateriiView", this);
         }
 
         private void OnSaveCommand(object obj)
