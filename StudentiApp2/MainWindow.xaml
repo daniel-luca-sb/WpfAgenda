@@ -1,0 +1,49 @@
+﻿<Window x:Class="StudentiApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentiApp2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="studentiViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Studenti}, CreateList=True}"/>
+        <CollectionViewSource x:Key="studentiNoteViewSource" Source="{Binding Note, Source={StaticResource studentiViewSource}}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource studentiViewSource}" Margin="0,0,-0.4,-1">
+        <DataGrid x:Name="studentiDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="78,10,316,248" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="adresaColumn" Binding="{Binding Adresa}" Header="Adresa" Width="SizeToHeader"/>
+                <DataGridTemplateColumn x:Name="dataNasteriiColumn" Header="Data Nasterii" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding DataNasterii, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="nrMatricolColumn" Binding="{Binding NrMatricol}" Header="Nr Matricol" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="numeColumn" Binding="{Binding Nume}" Header="Nume" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="orasColumn" Binding="{Binding Oras}" Header="Oras" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="telefonColumn" Binding="{Binding Telefon}" Header="Telefon" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="noteDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource studentiNoteViewSource}}" Margin="96,216,298,5" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn x:Name="dataColumn" Header="Data" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Data, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="iDColumn1" Binding="{Binding ID}" Header="ID" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="iDMaterieColumn" Binding="{Binding IDMaterie}" Header="IDMaterie" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="iDStudentColumn" Binding="{Binding IDStudent}" Header="IDStudent" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="notaColumn" Binding="{Binding Nota}" Header="Nota" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="tipExamenColumn" Binding="{Binding TipExamen}" Header="Tip Examen" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
