@@ -6,9 +6,6 @@
         xmlns:local="clr-namespace:StudentiApp1"
         mc:Ignorable="d"
         Title="MateriiView" Height="339.694" Width="493.434">
-    <Window.Resources>
-        <CollectionViewSource x:Key="materiiViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Materii}, CreateList=True}"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
